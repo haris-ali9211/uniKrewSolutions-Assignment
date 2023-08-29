@@ -1,0 +1,365 @@
+{
+	"info": {
+		"_postman_id": "7e22e0b2-e782-44b8-ace9-8014e3d675c1",
+		"name": "unikrew",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14081741"
+	},
+	"item": [
+		{
+			"name": "register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"muhammad\",\r\n    \"email\": \"hariss.ali9211@gmail.com\",\r\n    \"password\": \"ali\"\r\n}a",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"hariss.ali9211@gmail.com\",\r\n    \"password\": \"ali\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"beverageName\": \"Jasmine Green Tea\",\r\n  \"description\": \"A fragrant green tea infused with jasmine flowers.\",\r\n  \"category\": \"green tea\",\r\n  \"availableSizes\": [\r\n    {\r\n      \"cupCapacity\": \"small\",\r\n      \"price\": 3.99\r\n    },\r\n    {\r\n      \"cupCapacity\": \"large\",\r\n      \"price\": 4.49\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/product/addProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"product",
+						"addProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all product",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/product/getAllProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"product",
+						"getAllProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get one product",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/product/64ee0e8319e6408fc5a4ca8f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"product",
+						"64ee0e8319e6408fc5a4ca8f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update product",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"beverageName\": \"Updated Cappuccino\",\r\n  \"availableSizes\": [\r\n    {\r\n      \"cupCapacity\": \"small\",\r\n      \"price\": 3\r\n    },\r\n    {\r\n      \"cupCapacity\": \"large\",\r\n      \"price\": 4\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/product/updateProduct/64ee0e8319e6408fc5a4ca8f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"product",
+						"updateProduct",
+						"64ee0e8319e6408fc5a4ca8f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"beverageName\": \"Updated Cappuccino\",\r\n  \"availableSizes\": [\r\n    {\r\n      \"cupCapacity\": \"small\",\r\n      \"price\": 3\r\n    },\r\n    {\r\n      \"cupCapacity\": \"large\",\r\n      \"price\": 4\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/product/deleteProduct/64ee0e8319e6408fc5a4ca8f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"product",
+						"deleteProduct",
+						"64ee0e8319e6408fc5a4ca8f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"64ee02da8493957ac1a7e3a3\", \r\n  \"beverageName\": \"Jasmine Green Tea\",\r\n  \"cupCapacity\": 12,\r\n  \"quantity\": 1,\r\n  \"deliveryTime\": \"2023-09-01T15:30:00Z\",\r\n  \"recurringOrder\": true,\r\n  \"recurringSchedules\": [\r\n    {\r\n      \"dayOfWeek\": \"Monday\",\r\n      \"deliveryTime\": \"15:30\"\r\n    },\r\n    {\r\n      \"dayOfWeek\": \"Wednesday\",\r\n      \"deliveryTime\": \"15:30\"\r\n    },\r\n    {\r\n      \"dayOfWeek\": \"Friday\",\r\n      \"deliveryTime\": \"15:30\"\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/order/addOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"order",
+						"addOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all order",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/order/getAllOrder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"order",
+						"getAllOrder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get one order",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9864/api/order/64ee0e8319e6408fc5a4ca8f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"order",
+						"64ee0e8319e6408fc5a4ca8f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"additionalComments\": \"Extra shot of espresso\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9864/api/order/updateOrder/64ee1901958894d111af6374",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"order",
+						"updateOrder",
+						"64ee1901958894d111af6374"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete order",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9864/api/order/deleteOrder/64ee197261fc9219d0669d45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9864",
+					"path": [
+						"api",
+						"order",
+						"deleteOrder",
+						"64ee197261fc9219d0669d45"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
