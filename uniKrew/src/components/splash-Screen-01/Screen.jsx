@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, Image, TouchableOpacity, Dimensions} from 'react-native';
 
 //styles
@@ -7,9 +7,16 @@ import styles from './style';
 //get width
 const windowWidth = Dimensions.get('window').width;
 
+//context Opulent Sips
+import {OpulentSips} from '../../context/OpulentSips';
+
 const splashScreen = () => {
+  //context action
+  const {currentAccount} = useContext(OpulentSips);
+
   const imageWidth = windowWidth * 1; // Adjust as needed
   const imageHeight = (imageWidth * 272.31) / 305;
+
   const logos = [
     require('../../assets/images/logo.png'),
     require('../../assets/images/flashImage2.png'),
