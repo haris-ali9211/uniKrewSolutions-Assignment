@@ -1,3 +1,4 @@
+// react import
 import React, {useState, useContext} from 'react';
 import {View, Text, Image, TouchableOpacity, Dimensions} from 'react-native';
 
@@ -7,13 +8,8 @@ import styles from './style';
 //get width
 const windowWidth = Dimensions.get('window').width;
 
-//context Opulent Sips
-import {OpulentSips} from '../../context/OpulentSips';
-
-const splashScreen = () => {
-  //context action
-  const {currentAccount} = useContext(OpulentSips);
-
+const OnBoarding = ({navigation}) => {
+  // for responsive size import
   const imageWidth = windowWidth * 1; // Adjust as needed
   const imageHeight = (imageWidth * 272.31) / 305;
 
@@ -25,11 +21,19 @@ const splashScreen = () => {
 
   //useState
   const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
+  const [clickCounter, setClickCounter] = useState(0);
 
   //functions
   const changeIntroduction = () => {
     const newIndex = (currentLogoIndex + 1) % logos.length;
-    setCurrentLogoIndex(newIndex);
+
+    if (clickCounter >= 2) {
+      navigation.replace('Products');
+      setClickCounter(0);
+    } else {
+      setCurrentLogoIndex(newIndex);
+      setClickCounter(clickCounter + 1);
+    }
   };
 
   let info = [
@@ -49,7 +53,6 @@ const splashScreen = () => {
         'Easily find your favorite food and have it delivered in record time.',
     },
   ];
-
   return (
     <View style={styles.container}>
       <Image
@@ -62,9 +65,15 @@ const splashScreen = () => {
         <TouchableOpacity style={styles.button} onPress={changeIntroduction}>
           <Text style={styles.buttonText}>Get started</Text>
         </TouchableOpacity>
+
+        {/* <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('SplashScreen2')}>
+          <Text style={styles.buttonText}>Navigation test </Text>
+        </TouchableOpacity> */}
       </View>
     </View>
   );
 };
 
-export default splashScreen;
+export default OnBoarding;
