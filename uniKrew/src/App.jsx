@@ -4,6 +4,7 @@ import Products from './screens/ProductsView/Products';
 import ProductDetails from './screens/ProductDetails/ProductDetails';
 import CartDetails from './screens/Cart/Cart';
 import Login from './screens/Login/Login';
+import Register from './screens/Register/Register';
 
 //context
 import { OpulentSipsProvider } from './context/OpulentSips';
@@ -48,6 +49,11 @@ function App() {
               <Stack.Screen
                 name="Login"
                 component={Login}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Register"
+                component={Register}
                 options={{ headerShown: false }}
               />
             </Stack.Navigator>

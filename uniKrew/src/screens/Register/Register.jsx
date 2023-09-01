@@ -1,7 +1,6 @@
-
 //react import
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, Keyboard, Alert } from 'react-native';
+import { View, Text, SafeAreaView, Keyboard, Alert, ScrollView } from 'react-native';
 
 // colors import
 import COLORS from '../../consts/colors';
@@ -18,50 +17,62 @@ import style from './style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Login = ({ navigation }) => {
 
-    const [inputs, setInputs] = useState({ email: '', password: '' });
-    const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
+const Register = ({ navigation }) => {
 
+    const [inputs, setInputs] = React.useState({
+        email: '',
+        fullName: '',
+        phone: '',
+        password: '',
+    });
+    const [errors, setErrors] = React.useState({});
+    const [loading, setLoading] = React.useState(false);
 
-    const validate = async () => {
+    const validate = () => {
         Keyboard.dismiss();
         let isValid = true;
+
         if (!inputs.email) {
             handleError('Please input email', 'email');
             isValid = false;
+        } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+            handleError('Please input a valid email', 'email');
+            isValid = false;
         }
+
+        if (!inputs.fullName) {
+            handleError('Please input fullName', 'fullName');
+            isValid = false;
+        }
+
+        if (!inputs.phone) {
+            handleError('Please input phone number', 'phone');
+            isValid = false;
+        }
+
         if (!inputs.password) {
             handleError('Please input password', 'password');
             isValid = false;
+        } else if (inputs.password.length < 5) {
+            handleError('Min password length of 5', 'password');
+            isValid = false;
         }
+
         if (isValid) {
-            login();
+            // register();
         }
     };
 
-    const login = () => {
+    const register = () => {
         setLoading(true);
-        setTimeout(async () => {
-            setLoading(false);
-            let userData = await AsyncStorage.getItem('userData');
-            if (userData) {
-                userData = JSON.parse(userData);
-                if (
-                    inputs.email == userData.email &&
-                    inputs.password == userData.password
-                ) {
-                    navigation.navigate('HomeScreen');
-                    AsyncStorage.setItem(
-                        'userData',
-                        JSON.stringify({ ...userData, loggedIn: true }),
-                    );
-                } else {
-                    Alert.alert('Error', 'Invalid Details');
-                }
-            } else {
-                Alert.alert('Error', 'User does not exist');
+        setTimeout(() => {
+            try {
+                setLoading(false);
+                AsyncStorage.setItem('userData', JSON.stringify(inputs));
+                navigation.navigate('Login');
+            } catch (error) {
+                Alert.alert('Error', 'Something went wrong');
             }
         }, 3000);
     };
@@ -69,7 +80,6 @@ const Login = ({ navigation }) => {
     const handleOnchange = (text, input) => {
         setInputs(prevState => ({ ...prevState, [input]: text }));
     };
-
     const handleError = (error, input) => {
         setErrors(prevState => ({ ...prevState, [input]: error }));
     };
@@ -77,12 +87,13 @@ const Login = ({ navigation }) => {
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
             <Loader visible={loading} />
-            <View style={{ paddingTop: 50, paddingHorizontal: 20 }}>
+            <ScrollView
+                contentContainerStyle={{ paddingTop: 50, paddingHorizontal: 20 }}>
                 <Text style={{ color: COLORS.black, fontSize: 40, fontWeight: 'bold' }}>
-                    Log In
+                    Register
                 </Text>
                 <Text style={{ color: COLORS.grey, fontSize: 18, marginVertical: 10 }}>
-                    Enter Your Details to Login
+                    Enter Your Details to Register
                 </Text>
                 <View style={{ marginVertical: 20 }}>
                     <Input
@@ -93,6 +104,25 @@ const Login = ({ navigation }) => {
                         placeholder="Enter your email address"
                         error={errors.email}
                     />
+
+                    <Input
+                        onChangeText={text => handleOnchange(text, 'fullName')}
+                        onFocus={() => handleError(null, 'fullName')}
+                        iconName="account-outline"
+                        label="Full Name"
+                        placeholder="Enter your full name"
+                        error={errors.fullName}
+                    />
+
+                    <Input
+                        keyboardType="numeric"
+                        onChangeText={text => handleOnchange(text, 'phone')}
+                        onFocus={() => handleError(null, 'phone')}
+                        iconName="phone-outline"
+                        label="Phone Number"
+                        placeholder="Enter your phone no"
+                        error={errors.phone}
+                    />
                     <Input
                         onChangeText={text => handleOnchange(text, 'password')}
                         onFocus={() => handleError(null, 'password')}
@@ -102,21 +132,21 @@ const Login = ({ navigation }) => {
                         error={errors.password}
                         password
                     />
-                    <Button title="Log In" onPress={validate} />
+                    <Button title="Register" onPress={validate} />
                     <Text
-                        onPress={() => navigation.navigate('RegistrationScreen')}
+                        onPress={() => navigation.navigate('Login')}
                         style={{
                             color: COLORS.black,
                             fontWeight: 'bold',
                             textAlign: 'center',
                             fontSize: 16,
                         }}>
-                        Don't have account ?
+                        Already have account?
                     </Text>
                 </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
-    );
-};
+    )
+}
 
-export default Login
+export default Register
