@@ -3,7 +3,7 @@ import React from 'react';
 import {View, SafeAreaView, Image, Text, StyleSheet} from 'react-native';
 
 //icons
-import {MaterialIconsIcon, EntypoIcon} from '../../assets/icons/icon';
+import {MaterialIcons, EntypoIcon} from '../../assets/icons/icon';
 
 // colors import
 import COLORS from '../../consts/colors';
@@ -21,8 +21,8 @@ const ProductDetails = ({navigation, route}) => {
         backgroundColor: COLORS.white,
       }}>
       <View style={style.header}>
-        {/* <MaterialIconsIcon name="arrow-back" size={28} onPress={() => navigation.goBack()} /> */}
-        <MaterialIconsIcon name="shopping-cart" size={28} />
+        {/* <MaterialIcons name="arrow-back" size={28} onPress={() => navigation.goBack()} /> */}
+        <MaterialIcons name="shopping-cart" size={28} />
       </View>
       <View style={style.imageContainer}>
         <Image source={plant.img} style={{resizeMode: 'contain', flex: 1}} />

@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 // icons
-import {MaterialIconsIcon, EntypoIcon} from '../assets/icons/icon';
+import {MaterialIcons, EntypoIcon} from '../assets/icons/icon';
 
 const Card = ({plant, style, COLORS, navigation}) => {
   return (
@@ -23,7 +23,7 @@ const Card = ({plant, style, COLORS, navigation}) => {
                 ? 'rgba(245, 42, 42,0.2)'
                 : 'rgba(0,0,0,0.2) ',
             }}>
-            <MaterialIconsIcon
+            <MaterialIcons
               name="favorite"
               size={18}
               color={plant.like ? COLORS.red : COLORS.black}
