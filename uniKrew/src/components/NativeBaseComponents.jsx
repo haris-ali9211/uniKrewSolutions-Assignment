@@ -1,7 +1,13 @@
 // import nativeBase
 import { AlertDialog, Button, Center, Badge } from 'native-base';
 
-const Alert = ({ cancelRef, onClose, isOpen }) => {
+const Alert = ({ cancelRef, onClose, isOpen, navigation }) => {
+
+    const handelFlow = () => {
+        onClose
+        navigation.navigate('Checkout')
+    }
+
     return (
         <Center>
             <AlertDialog leastDestructiveRef={cancelRef} isOpen={isOpen} onClose={onClose}>
@@ -16,7 +22,7 @@ const Alert = ({ cancelRef, onClose, isOpen }) => {
                             <Button variant="unstyled" colorScheme="coolGray" onPress={onClose} ref={cancelRef}>
                                 Cancel
                             </Button>
-                            <Button colorScheme="danger" onPress={onClose}>
+                            <Button colorScheme="danger" onPress={handelFlow}>
                                 Yes
                             </Button>
                         </Button.Group>

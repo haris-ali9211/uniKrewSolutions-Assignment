@@ -82,7 +82,7 @@ export default function Cart({ navigation }) {
           <PrimaryButton title="CHECKOUT" style={style} onPress={() => setIsOpen(!isOpen)} />
         </View>
 
-        <Alert cancelRef={cancelRef} onClose={onClose} isOpen={isOpen} />
+        <Alert cancelRef={cancelRef} onClose={onClose} isOpen={isOpen} navigation={navigation} />
       </View>
     </SafeAreaView>
   );
