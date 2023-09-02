@@ -27,6 +27,7 @@ import Card from '../../components/Card';
 import { BadgeIcon } from '../../components/NativeBaseComponents';
 
 const Products = ({ navigation }) => {
+
   return (
     <SafeAreaView
       style={{ flex: 1, paddingHorizontal: 20, backgroundColor: COLORS.white }}>

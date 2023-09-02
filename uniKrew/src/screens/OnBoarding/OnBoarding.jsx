@@ -1,14 +1,30 @@
 // react import
-import React, {useState, useContext} from 'react';
-import {View, Text, Image, TouchableOpacity, Dimensions} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 
 //styles
 import styles from './style';
 
+// local storage import
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 //get width
 const windowWidth = Dimensions.get('window').width;
 
-const OnBoarding = ({navigation}) => {
+const OnBoarding = ({ navigation }) => {
+
+  // store data in LocalStorage
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem('boarded', 'Yes');
+      console.log(' Boarded data Stored')
+    } catch (error) {
+      console.log('error', error)
+    }
+  };
+
+
   // for responsive size import
   const imageWidth = windowWidth * 1; // Adjust as needed
   const imageHeight = (imageWidth * 272.31) / 305;
@@ -28,6 +44,7 @@ const OnBoarding = ({navigation}) => {
     const newIndex = (currentLogoIndex + 1) % logos.length;
 
     if (clickCounter >= 2) {
+      storeData()
       navigation.replace('Products');
       setClickCounter(0);
     } else {
@@ -57,7 +74,7 @@ const OnBoarding = ({navigation}) => {
     <View style={styles.container}>
       <Image
         source={logos[currentLogoIndex]}
-        style={{...styles.image, width: imageWidth, height: imageHeight}}
+        style={{ ...styles.image, width: imageWidth, height: imageHeight }}
       />
       <View style={styles.textContainer}>
         <Text style={styles.heading}>{info[currentLogoIndex].heading}</Text>
