@@ -47,7 +47,11 @@ router.post(
 router.get("/getAllProduct", async (req, res) => {
   try {
     const products = await Product.find();
-    res.status(200).json(products);
+    res.status(200).json({
+      message: "get product successful",
+      status: "200",
+      response: products,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });

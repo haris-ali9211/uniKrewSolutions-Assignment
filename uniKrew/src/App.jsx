@@ -12,7 +12,7 @@ import MainLogo from './screens/MainLogo/MainLogo';
 import React, { useState, useEffect } from 'react';
 
 //context
-import { OpulentSipsProvider } from './context/OpulentSips';
+import { OpulentSipsProvider } from './context/OpulentSipsContext';
 
 //navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -23,6 +23,16 @@ import { NativeBaseProvider } from 'native-base';
 
 // local storage import
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// import redux
+import { store, persistor } from './redux/store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
+//notify message
+import Toast from 'react-native-toast-message';
+
+
 
 //initializing stack
 const Stack = createNativeStackNavigator();
@@ -107,4 +117,13 @@ function App() {
   );
 }
 
-export default App;
+export default () => {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+        <Toast />
+      </PersistGate>
+    </Provider>
+  )
+};;
