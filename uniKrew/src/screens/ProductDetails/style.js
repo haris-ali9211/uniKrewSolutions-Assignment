@@ -56,6 +56,25 @@ const style = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderBottomLeftRadius: 25,
   },
+
+  sizeButtons: {
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: 'space-between',
+  },
+  sizeButton: {
+    flex: 1,
+    backgroundColor: COLORS.light,
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  selectedSize: {
+    backgroundColor: COLORS.green, // Change this to your selected color
+  },
+  sizeButtonText: {
+    fontWeight: 'bold',
+  },
 });
 
 export default style;

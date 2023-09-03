@@ -5,11 +5,21 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 // icons
 import { MaterialIcons, EntypoIcon } from '../assets/icons/icon';
 
-const Card = ({ plant, style, COLORS, navigation }) => {
+const Card = ({ product, style, COLORS, navigation, plants }) => {
+  // console.log("🚀 ~ file: Card.jsx:9 ~ Card ~ product:", product?._id)
+
+  // const randomIndex = Math.floor(Math.random() * plants.length);
+  // const randomPlant = plants[randomIndex]?.img;
+
+  const flow = () => {
+    // const updatedProduct = { ...product, img: randomPlant };
+    navigation.navigate('Details', product?._id);
+  }
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('Details', plant)}>
+      onPress={flow}>
       <View style={style.card}>
         <View style={{ alignItems: 'flex-end' }}>
           <View
@@ -19,14 +29,14 @@ const Card = ({ plant, style, COLORS, navigation }) => {
               borderRadius: 20,
               justifyContent: 'center',
               alignItems: 'center',
-              // backgroundColor: plant.like
+              // backgroundColor: product.like
               //   ? 'rgba(245, 42, 42,0.2)'
               //   : 'rgba(0,0,0,0.2) ',
             }}>
             <MaterialIcons
               name="favorite"
               size={18}
-            // color={plant.like ? COLORS.red : COLORS.black}
+            // color={product.like ? COLORS.red : COLORS.black}
             />
           </View>
         </View>
@@ -36,11 +46,11 @@ const Card = ({ plant, style, COLORS, navigation }) => {
             height: 100,
             alignItems: 'center',
           }}>
-          {/* <Image source={plant.img} style={{ flex: 1, resizeMode: 'contain' }} /> */}
+          {/* <Image source={randomPlant} style={{ flex: 1, resizeMode: 'contain' }} /> */}
         </View>
 
         <Text style={{ fontWeight: 'bold', fontSize: 17, marginTop: 10 }}>
-          {plant.beverageName}
+          {product.beverageName}
         </Text>
         <View
           style={{
@@ -48,7 +58,7 @@ const Card = ({ plant, style, COLORS, navigation }) => {
             justifyContent: 'space-between',
             marginTop: 5,
           }}>
-          <Text style={{ fontSize: 19, fontWeight: 'bold' }}>${plant.availableSizes[0].price}</Text>
+          <Text style={{ fontSize: 19, fontWeight: 'bold' }}>${product.availableSizes[0].price}</Text>
           <View
             style={{
               height: 25,

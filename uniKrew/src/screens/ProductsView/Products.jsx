@@ -38,7 +38,7 @@ const Products = ({ navigation }) => {
 
   //useState hooks
   const [product, setProduct] = useState([])
-  console.log("🚀product:", product[0].availableSizes)
+  const [error, setError] = useState(null)
 
   // context
   const { getProductsFromStore } = useContext(OpulentSips)
@@ -50,8 +50,10 @@ const Products = ({ navigation }) => {
     let data = await getProductsFromStore()
     if (data) {
       setProduct(data)
+      setError(false)
     }
     else {
+      setError(true)
       console.log("nope")
     }
   }
@@ -92,6 +94,8 @@ const Products = ({ navigation }) => {
           <MaterialIcons name="sort" size={30} color={COLORS.white} />
         </View>
       </View>
+
+
       {
         isLoading ? (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -113,14 +117,16 @@ const Products = ({ navigation }) => {
                 renderItem={({ item }) => {
                   return (
                     <Card
-                      plant={item}
+                      product={item}
                       style={style}
                       COLORS={COLORS}
+                      plants={plants}
                       navigation={navigation}
                     />
                   );
                 }}
               />
+              {error && (<View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}><Text>SomeThing went Wrong</Text></View>)}
             </>
           )
 

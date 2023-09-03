@@ -65,7 +65,11 @@ router.get("/:productId", async (req, res) => {
     if (!product) {
       return res.status(404).json({ error: "Product not found" });
     }
-    res.status(200).json(product);
+    res.status(200).json({
+      message: "get product successful",
+      status: "200",
+      response: product,
+    });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Internal server error" });

@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import { FavouriteIcon } from 'native-base';
+import React, { useState } from 'react';
 import {
   View,
   SafeAreaView,
@@ -9,11 +10,11 @@ import {
   TextInput,
 } from 'react-native';
 
-const CategoryList = ({style}) => {
+const CategoryList = ({ style }) => {
   // useState
   const [categoryIndex, setCategoryIndex] = useState(0);
 
-  const categories = ['coffee', 'juice', 'green tea', 'regular tea'];
+  const categories = ['coffee', 'juice', 'green tea', 'regular tea', 'favorite'];
 
   return (
     <View style={style.categoryContainer}>

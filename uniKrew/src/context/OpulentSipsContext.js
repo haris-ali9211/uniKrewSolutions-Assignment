@@ -29,6 +29,15 @@ export const OpulentSipsProvider = ({children}) => {
     }
   };
 
+  const getOneProductFromStore = async _id => {
+    const data = await getApi(`/product/${_id}`, dispatch);
+    if (data?.status) {
+      return data?.response;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <OpulentSips.Provider
       value={{
@@ -36,6 +45,7 @@ export const OpulentSipsProvider = ({children}) => {
         currentAccount,
         // functions
         getProductsFromStore,
+        getOneProductFromStore,
       }}>
       {children}
     </OpulentSips.Provider>
