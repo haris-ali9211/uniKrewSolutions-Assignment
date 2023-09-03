@@ -1,34 +1,29 @@
 // react import
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 // icons
-import { MaterialIcons, EntypoIcon } from '../assets/icons/icon';
+import {MaterialIcons, EntypoIcon} from '../assets/icons/icon';
 
 //images
 import plants from '../consts/plants';
 
-
-
-const Card = ({ product, style, COLORS, navigation, plants }) => {
-
+const Card = ({product, style, COLORS, navigation}) => {
   const randomIndex = Math.floor(Math.random() * plants.length);
   const randomPlant = plants[randomIndex]?.img;
 
   const flow = () => {
     let imageData = {
       _id: product?._id,
-      img: randomPlant
-    }
+      img: randomPlant,
+    };
     navigation.navigate('Details', imageData);
-  }
+  };
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={flow}>
+    <TouchableOpacity activeOpacity={0.8} onPress={flow}>
       <View style={style.card}>
-        <View style={{ alignItems: 'flex-end' }}>
+        <View style={{alignItems: 'flex-end'}}>
           <View
             style={{
               width: 30,
@@ -43,7 +38,7 @@ const Card = ({ product, style, COLORS, navigation, plants }) => {
             <MaterialIcons
               name="favorite"
               size={18}
-            // color={product.like ? COLORS.red : COLORS.black}
+              // color={product.like ? COLORS.red : COLORS.black}
             />
           </View>
         </View>
@@ -53,10 +48,13 @@ const Card = ({ product, style, COLORS, navigation, plants }) => {
             height: 100,
             alignItems: 'center',
           }}>
-          <Image source={randomPlant} style={{ flex: 1, resizeMode: 'contain' }} />
+          <Image
+            source={randomPlant}
+            style={{flex: 1, resizeMode: 'contain', zIndex: -10}}
+          />
         </View>
 
-        <Text style={{ fontWeight: 'bold', fontSize: 17, marginTop: 10 }}>
+        <Text style={{fontWeight: 'bold', fontSize: 17, marginTop: 10}}>
           {product.beverageName}
         </Text>
         <View
@@ -65,7 +63,9 @@ const Card = ({ product, style, COLORS, navigation, plants }) => {
             justifyContent: 'space-between',
             marginTop: 5,
           }}>
-          <Text style={{ fontSize: 19, fontWeight: 'bold' }}>${product.availableSizes[0].price}</Text>
+          <Text style={{fontSize: 19, fontWeight: 'bold'}}>
+            ${product.availableSizes[0].price}
+          </Text>
           <View
             style={{
               height: 25,
@@ -75,7 +75,6 @@ const Card = ({ product, style, COLORS, navigation, plants }) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-
             <EntypoIcon name="plus" size={18} color={COLORS.white} />
           </View>
         </View>

@@ -120,7 +120,6 @@ const Products = ({ navigation }) => {
                       product={item}
                       style={style}
                       COLORS={COLORS}
-                      plants={plants}
                       navigation={navigation}
                     />
                   );
