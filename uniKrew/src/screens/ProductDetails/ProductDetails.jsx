@@ -20,7 +20,9 @@ import { useSelector } from 'react-redux';
 
 const ProductDetails = ({ navigation, route }) => {
 
-  const _id = route.params;
+  //navigation
+  const navigationData = route.params;
+  const { _id, img } = navigationData
 
   // redux 
   const { isLoading } = useSelector(state => state.loader);
@@ -29,17 +31,17 @@ const ProductDetails = ({ navigation, route }) => {
   const { getOneProductFromStore } = useContext(OpulentSips)
 
   // useState
-  const [selectedSize, setSelectedSize] = useState('medium');
-  const [plant, setProduct] = useState([])
+  const [product, setProduct] = useState([])
   const [error, setError] = useState(null)
-
+  const [selectedSize, setSelectedSize] = useState();
+  console.log("🚀 ~ file: ProductDetails.jsx:35 ~ selectedSize:", product?.availableSizes[1])
 
   const getProductData = async () => {
     let data = await getOneProductFromStore(_id)
-    console.log("🚀 ~ file: ProductDetails.jsx:38 ~ getProductData ~ data:", data)
     if (data) {
       setProduct(data)
       setError(false)
+      // setSelectedSize()
     }
     else {
       setError(true)
@@ -59,7 +61,7 @@ const ProductDetails = ({ navigation, route }) => {
 
     <>
       {
-        isLoading ? (
+        isLoading || error ? (
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <ActivityIndicator size="large" color={COLORS.green} />
           </View>
@@ -82,7 +84,7 @@ const ProductDetails = ({ navigation, route }) => {
                   </TouchableOpacity>
                 </View>
                 <View style={style.imageContainer}>
-                  <Image source={plant.img} style={{ resizeMode: 'contain', flex: 1 }} />
+                  <Image source={img} style={{ resizeMode: 'contain', flex: 1 }} />
                 </View>
 
                 <View style={style.detailsContainer}>
@@ -103,7 +105,7 @@ const ProductDetails = ({ navigation, route }) => {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                     }}>
-                    <Text style={{ fontSize: 22, fontWeight: 'bold' }}>{plant.beverageName}</Text>
+                    <Text style={{ fontSize: 22, fontWeight: 'bold' }}>{product.beverageName}</Text>
                     <View style={style.priceTag}>
                       <Text
                         style={{
@@ -112,7 +114,7 @@ const ProductDetails = ({ navigation, route }) => {
                           fontWeight: 'bold',
                           fontSize: 16,
                         }}>
-                        ${plant.price}
+                        ${product.price}
                       </Text>
                     </View>
                   </View>
@@ -126,27 +128,24 @@ const ProductDetails = ({ navigation, route }) => {
                         lineHeight: 22,
                         marginTop: 10,
                       }}>
-                      {plant.description}
+                      {product.description}
                     </Text>
 
                     <View style={{ marginTop: 20 }}>
                       <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Select Size</Text>
                       <View style={style.sizeButtons}>
-                        <TouchableOpacity
-                          style={[style.sizeButton, selectedSize === 'small' && style.selectedSize]}
-                          onPress={() => handleSizeChange('small')}>
-                          <Text style={style.sizeButtonText}>Small</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={[style.sizeButton, selectedSize === 'medium' && style.selectedSize]}
-                          onPress={() => handleSizeChange('medium')}>
-                          <Text style={style.sizeButtonText}>Medium</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={[style.sizeButton, selectedSize === 'large' && style.selectedSize]}
-                          onPress={() => handleSizeChange('large')}>
-                          <Text style={style.sizeButtonText}>Large</Text>
-                        </TouchableOpacity>
+                        {product?.availableSizes?.map((data, index) => {
+                          return (
+                            <>
+                              <TouchableOpacity
+                                key={index}
+                                style={[style.sizeButton, selectedSize === data?.cupCapacity && style.selectedSize]}
+                                onPress={() => handleSizeChange(data?.cupCapacity)}>
+                                <Text style={style.sizeButtonText}>{data?.cupCapacity?.charAt(0)?.toUpperCase() + data?.cupCapacity?.slice(1)}</Text>
+                              </TouchableOpacity>
+                            </>
+                          )
+                        })}
                       </View>
                     </View>
 

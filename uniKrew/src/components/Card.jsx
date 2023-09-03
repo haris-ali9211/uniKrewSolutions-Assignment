@@ -5,15 +5,22 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 // icons
 import { MaterialIcons, EntypoIcon } from '../assets/icons/icon';
 
-const Card = ({ product, style, COLORS, navigation, plants }) => {
-  // console.log("🚀 ~ file: Card.jsx:9 ~ Card ~ product:", product?._id)
+//images
+import plants from '../consts/plants';
 
-  // const randomIndex = Math.floor(Math.random() * plants.length);
-  // const randomPlant = plants[randomIndex]?.img;
+
+
+const Card = ({ product, style, COLORS, navigation, plants }) => {
+
+  const randomIndex = Math.floor(Math.random() * plants.length);
+  const randomPlant = plants[randomIndex]?.img;
 
   const flow = () => {
-    // const updatedProduct = { ...product, img: randomPlant };
-    navigation.navigate('Details', product?._id);
+    let imageData = {
+      _id: product?._id,
+      img: randomPlant
+    }
+    navigation.navigate('Details', imageData);
   }
 
   return (
@@ -46,7 +53,7 @@ const Card = ({ product, style, COLORS, navigation, plants }) => {
             height: 100,
             alignItems: 'center',
           }}>
-          {/* <Image source={randomPlant} style={{ flex: 1, resizeMode: 'contain' }} /> */}
+          <Image source={randomPlant} style={{ flex: 1, resizeMode: 'contain' }} />
         </View>
 
         <Text style={{ fontWeight: 'bold', fontSize: 17, marginTop: 10 }}>
