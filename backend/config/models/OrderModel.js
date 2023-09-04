@@ -38,6 +38,10 @@ const orderSchema = new Schema(
       default: "medium",
     },
     cupCapacity: {
+      type: String,
+      required: true,
+    },
+    price: {
       type: Number,
       required: true,
     },

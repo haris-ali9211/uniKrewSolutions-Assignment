@@ -9,8 +9,9 @@ router.post(
   [
     check("userId").notEmpty().withMessage("User ID is required"),
     check("beverageName").notEmpty().withMessage("Beverage name is required"),
+    check("price").notEmpty().withMessage("price is required"),
     check("cupCapacity")
-      .isNumeric()
+      .isString()
       .withMessage("Cup capacity must be a number"),
     check("deliveryTime").notEmpty().withMessage("Delivery time is required"),
   ],
