@@ -40,7 +40,13 @@ const ProductDetails = ({navigation, route}) => {
   const {isLoading} = useSelector(state => state.loader);
 
   // context
-  const {getOneProductFromStore} = useContext(OpulentSips);
+  const {
+    getOneProductFromStore,
+    setProductToCart,
+    resetProductCart,
+    removeProduct,
+    setRecurveProductToCart,
+  } = useContext(OpulentSips);
 
   // native function
   const {isOpen, onOpen, onClose} = useDisclose();
@@ -89,16 +95,22 @@ const ProductDetails = ({navigation, route}) => {
 
   const sugarArray = ['none', 'low', 'medium', 'high'];
 
+  let cartData = {
+    _id: product._id,
+    beverageName: product.beverageName,
+    sugarLevel: selectedSugar,
+    cupCapacity: selectedSize,
+    price: price,
+    quantity: counter,
+    recurringOrder: false,
+  };
+
   const handelOrder = () => {
-    let cartData = {
-      beverageName: product.beverageName,
-      sugarLevel: selectedSugar,
-      cupCapacity: selectedSize,
-      quantity: counter,
-      deliveryTime: Date(),
-      recurringOrder: false,
-    };
-    console.log('🚀():', cartData);
+    setProductToCart(cartData);
+    setSelectedSize(product?.availableSizes[0].cupCapacity);
+    setPrice(product?.availableSizes[0].price);
+    setSelectedSugar('none');
+    setCounter(1);
   };
 
   return (
@@ -282,7 +294,27 @@ const ProductDetails = ({navigation, route}) => {
                   Schedule a Order
                 </Text>
               </TouchableOpacity>
-              <ActionsheetScreen isOpen={isOpen} onClose={onClose} />
+
+              <TouchableOpacity
+                onPress={() => resetProductCart()}
+                style={{
+                  backgroundColor: COLORS.green,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: COLORS.white,
+                  }}>
+                  Schedule a delete
+                </Text>
+              </TouchableOpacity>
+              <ActionsheetScreen
+                isOpen={isOpen}
+                onClose={onClose}
+                setRecurveProductToCart={setRecurveProductToCart}
+                cartData={cartData}
+              />
             </View>
             {/* </ScrollView> */}
           </SafeAreaView>

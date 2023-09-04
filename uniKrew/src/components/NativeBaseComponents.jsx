@@ -84,7 +84,12 @@ const BadgeIcon = ({number}) => {
   );
 };
 
-const ActionsheetScreen = ({isOpen, onClose}) => {
+const ActionsheetScreen = ({
+  isOpen,
+  onClose,
+  setRecurveProductToCart,
+  cartData,
+}) => {
   const [selectedDay, setSelectedDay] = useState('');
   const [time, setTime] = useState('');
 
@@ -133,36 +138,50 @@ const ActionsheetScreen = ({isOpen, onClose}) => {
   };
 
   const addToCart = () => {
-    console.log('🚀 ~ file: :', time && recurringSchedules.length > 0);
-    if (time && recurringSchedules.length > 0) {
-      const formattedInput = time.replace(/\s/g, '').toUpperCase();
-      if (/^\d{0,2}:\d{0,2}(AM|PM)?$/.test(formattedInput)) {
-      } else {
-        Toast.show({
-          text1: 'Wrong time entered',
-          text2: `Please enter correct time 'HH:MM AM/PM'`,
-          textStyle: {textAlign: 'center', fontSize: 22},
-          type: 'error',
-          visibilityTime: 5000,
-        });
-      }
-    } else if (!time || recurringSchedules.length > 0) {
-      Toast.show({
-        text1: 'Input field empty',
-        text2: 'Please enter time and day',
-        textStyle: {textAlign: 'center'},
-        type: 'error',
-        visibilityTime: 5000,
-      });
-      console.log('Input field empty');
-    } else {
-      Toast.show({
-        text1: 'Please enter time and day',
-        textStyle: {textAlign: 'center'},
-        type: 'error',
-        visibilityTime: 5000,
-      });
-    }
+    const formattedSchedules = recurringSchedules.map(dayOfWeek => ({
+      dayOfWeek,
+      deliveryTime: time,
+    }));
+
+    const updatedCartData = {
+      ...cartData, // Copy the existing cartData properties
+      recurringOrder: true, // Set recurringOrder to true
+      recurringSchedules: formattedSchedules,
+    };
+
+    setRecurveProductToCart(updatedCartData);
+    // Now, you can use updatedCartData for your cart operations
+
+    // if (time && recurringSchedules.length > 0) {
+    //   const formattedInput = time.replace(/\s/g, '').toUpperCase();
+    //   if (/^\d{0,2}:\d{0,2}(AM|PM)?$/.test(formattedInput)) {
+
+    //   } else {
+    //     Toast.show({
+    //       text1: 'Wrong time entered',
+    //       text2: `Please enter correct time 'HH:MM AM/PM'`,
+    //       textStyle: {textAlign: 'center', fontSize: 22},
+    //       type: 'error',
+    //       visibilityTime: 5000,
+    //     });
+    //   }
+    // } else if (!time || recurringSchedules.length > 0) {
+    //   Toast.show({
+    //     text1: 'Input field empty',
+    //     text2: 'Please enter time and day',
+    //     textStyle: {textAlign: 'center'},
+    //     type: 'error',
+    //     visibilityTime: 5000,
+    //   });
+    //   console.log('Input field empty');
+    // } else {
+    //   Toast.show({
+    //     text1: 'Please enter time and day',
+    //     textStyle: {textAlign: 'center'},
+    //     type: 'error',
+    //     visibilityTime: 5000,
+    //   });
+    // }
   };
 
   const renderDayButtons = () => {
