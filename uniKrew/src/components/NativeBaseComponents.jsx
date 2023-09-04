@@ -20,6 +20,10 @@ import {
   Actionsheet,
 } from 'native-base';
 
+// toast
+import Toast from 'react-native-toast-message';
+
+// colors
 import COLORS from '../consts/colors';
 
 const Alert = ({cancelRef, onClose, isOpen, navigation}) => {
@@ -129,17 +133,35 @@ const ActionsheetScreen = ({isOpen, onClose}) => {
   };
 
   const addToCart = () => {
-    if (time) {
-      console.log('yes');
+    console.log('🚀 ~ file: :', time && recurringSchedules.length > 0);
+    if (time && recurringSchedules.length > 0) {
       const formattedInput = time.replace(/\s/g, '').toUpperCase();
-
       if (/^\d{0,2}:\d{0,2}(AM|PM)?$/.test(formattedInput)) {
-        console.log('yesyes');
       } else {
-        console.log('nono');
+        Toast.show({
+          text1: 'Wrong time entered',
+          text2: `Please enter correct time 'HH:MM AM/PM'`,
+          textStyle: {textAlign: 'center', fontSize: 22},
+          type: 'error',
+          visibilityTime: 5000,
+        });
       }
+    } else if (!time || recurringSchedules.length > 0) {
+      Toast.show({
+        text1: 'Input field empty',
+        text2: 'Please enter time and day',
+        textStyle: {textAlign: 'center'},
+        type: 'error',
+        visibilityTime: 5000,
+      });
+      console.log('Input field empty');
     } else {
-      console.log('no');
+      Toast.show({
+        text1: 'Please enter time and day',
+        textStyle: {textAlign: 'center'},
+        type: 'error',
+        visibilityTime: 5000,
+      });
     }
   };
 

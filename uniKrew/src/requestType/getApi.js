@@ -46,3 +46,10 @@ export default async function getApi(endpoint, dispatch) {
     return null;
   }
 }
+
+// Toast.show({
+//   text1: 'Wow',
+//   textStyle: {textAlign: 'center', fontSize: 22},
+//   type: 'success',
+//   visibilityTime: 5000,
+// });

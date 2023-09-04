@@ -49,6 +49,7 @@ const ProductDetails = ({navigation, route}) => {
   const [product, setProduct] = useState([]);
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSugar, setSelectedSugar] = useState('none');
   const [price, setPrice] = useState('');
   const [counter, setCounter] = useState(1);
 
@@ -70,6 +71,10 @@ const ProductDetails = ({navigation, route}) => {
     setPrice(price);
   };
 
+  const handleSugarChange = packet => {
+    setSelectedSugar(packet);
+  };
+
   const handleCounter = type => {
     if (type === 'increment') {
       setCounter(counter + 1);
@@ -81,6 +86,20 @@ const ProductDetails = ({navigation, route}) => {
   useEffect(() => {
     getProductData();
   }, []);
+
+  const sugarArray = ['none', 'low', 'medium', 'high'];
+
+  const handelOrder = () => {
+    let cartData = {
+      beverageName: product.beverageName,
+      sugarLevel: selectedSugar,
+      cupCapacity: selectedSize,
+      quantity: counter,
+      deliveryTime: Date(),
+      recurringOrder: false,
+    };
+    console.log('🚀():', cartData);
+  };
 
   return (
     <>
@@ -173,6 +192,27 @@ const ProductDetails = ({navigation, route}) => {
                   </View>
                 </View>
 
+                <View style={{marginTop: 5}}>
+                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                    Select Sugar
+                  </Text>
+                  <View style={style.sizeButtons}>
+                    {sugarArray.map((data, index) => {
+                      return (
+                        <TouchableOpacity
+                          key={index}
+                          style={[
+                            style.sizeButton,
+                            selectedSugar === data && style.selectedSize,
+                          ]}
+                          onPress={() => handleSugarChange(data)}>
+                          <Text style={style.sizeButtonText}>{data}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </View>
+
                 <View
                   style={{
                     marginTop: 20,
@@ -207,7 +247,7 @@ const ProductDetails = ({navigation, route}) => {
                     </TouchableOpacity>
                   </View>
 
-                  <TouchableOpacity style={style.buyBtn}>
+                  <TouchableOpacity style={style.buyBtn} onPress={handelOrder}>
                     <Text
                       style={{
                         color: COLORS.white,
