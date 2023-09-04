@@ -23,13 +23,13 @@ import {OpulentSips} from '../../context/OpulentSipsContext';
 import style from './style';
 
 // component
-import {Actionsheet} from '../../components/NativeBaseComponents';
+import {ActionsheetScreen} from '../../components/NativeBaseComponents';
 
 // redux actions
 import {useSelector} from 'react-redux';
 
 // import native-base
-// import {useDisclose} from 'native-base';
+import {useDisclose} from 'native-base';
 
 const ProductDetails = ({navigation, route}) => {
   //navigation
@@ -242,7 +242,7 @@ const ProductDetails = ({navigation, route}) => {
                   Schedule a Order
                 </Text>
               </TouchableOpacity>
-              <Actionsheet />
+              <ActionsheetScreen isOpen={isOpen} onClose={onClose} />
             </View>
             {/* </ScrollView> */}
           </SafeAreaView>
