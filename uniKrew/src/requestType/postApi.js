@@ -11,12 +11,20 @@ import {baseURL, defaultTimeout} from '../config/config';
 axios.defaults.baseURL = baseURL;
 axios.defaults.timeout = defaultTimeout;
 
-export default async function postApi(endpoint, payload) {
+// redux actions
+import {loaderStart, loaderStop} from '../redux/actions/actions';
+
+export default async function postApi(endpoint, payload, dispatch) {
   try {
-    const response = await axios.post(endpoint, newParams);
+    dispatch(loaderStart());
+
+    const response = await axios.post(endpoint, payload);
+    dispatch(loaderStop());
+
     return response.data;
   } catch (e) {
     console.log('error', e);
+    dispatch(loaderStop());
     if (
       e.message.includes('timeout of ') &&
       e.message.includes('ms exceeded')

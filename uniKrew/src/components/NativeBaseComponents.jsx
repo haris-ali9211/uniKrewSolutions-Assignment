@@ -1,5 +1,5 @@
 // import react
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -24,16 +24,19 @@ import {
 import COLORS from '../consts/colors';
 
 // redux actions
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
+//Toast
+import Toast from 'react-native-toast-message';
 
-const Alert = ({cancelRef, onClose, isOpen, navigation}) => {
+
+const Alert = ({ cancelRef, onClose, isOpen, navigation }) => {
   const handelFlow = () => {
     onClose;
     navigation.navigate('Checkout');
   };
 
   return (
-    <KeyboardAvoidingView style={{flex: 1}} behavior="height" enabled>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height" enabled>
       <Center>
         <AlertDialog
           leastDestructiveRef={cancelRef}
@@ -68,7 +71,7 @@ const Alert = ({cancelRef, onClose, isOpen, navigation}) => {
 
 const BadgeIcon = () => {
   // redux
-  const {totalQuantity} = useSelector(state => state.cart);
+  const { totalQuantity } = useSelector(state => state.cart);
 
   return (
     <>
@@ -96,6 +99,7 @@ const ActionsheetScreen = ({
   onClose,
   setRecurveProductToCart,
   cartData,
+  navigation
 }) => {
   // useState
   const [selectedDay, setSelectedDay] = useState('');
@@ -111,7 +115,7 @@ const ActionsheetScreen = ({
     'Sunday',
   ];
 
-  const {height: screenHeight} = Dimensions.get('window');
+  const { height: screenHeight } = Dimensions.get('window');
   const [actionsheetHeight, setActionsheetHeight] = useState(screenHeight / 3);
   const [recurringSchedules, setRecurringSchedules] = useState([]);
 
@@ -146,50 +150,57 @@ const ActionsheetScreen = ({
   };
 
   const addToCart = () => {
-    const formattedSchedules = recurringSchedules.map(dayOfWeek => ({
-      dayOfWeek,
-      deliveryTime: time,
-    }));
 
-    const updatedCartData = {
-      ...cartData, // Copy the existing cartData properties
-      recurringOrder: true, // Set recurringOrder to true
-      recurringSchedules: formattedSchedules,
-    };
-
-    setRecurveProductToCart(updatedCartData);
     // Now, you can use updatedCartData for your cart operations
 
-    // if (time && recurringSchedules.length > 0) {
-    //   const formattedInput = time.replace(/\s/g, '').toUpperCase();
-    //   if (/^\d{0,2}:\d{0,2}(AM|PM)?$/.test(formattedInput)) {
+    if (time && recurringSchedules.length > 0) {
+      const formattedInput = time.replace(/\s/g, '').toUpperCase();
+      if (/^\d{0,2}:\d{0,2}(AM|PM)?$/.test(formattedInput)) {
+        const formattedSchedules = recurringSchedules.map(dayOfWeek => ({
+          dayOfWeek,
+          deliveryTime: time,
+        }));
 
-    //   } else {
-    //     Toast.show({
-    //       text1: 'Wrong time entered',
-    //       text2: `Please enter correct time 'HH:MM AM/PM'`,
-    //       textStyle: {textAlign: 'center', fontSize: 22},
-    //       type: 'error',
-    //       visibilityTime: 5000,
-    //     });
-    //   }
-    // } else if (!time || recurringSchedules.length > 0) {
-    //   Toast.show({
-    //     text1: 'Input field empty',
-    //     text2: 'Please enter time and day',
-    //     textStyle: {textAlign: 'center'},
-    //     type: 'error',
-    //     visibilityTime: 5000,
-    //   });
-    //   console.log('Input field empty');
-    // } else {
-    //   Toast.show({
-    //     text1: 'Please enter time and day',
-    //     textStyle: {textAlign: 'center'},
-    //     type: 'error',
-    //     visibilityTime: 5000,
-    //   });
-    // }
+        const updatedCartData = {
+          ...cartData, // Copy the existing cartData properties
+          recurringOrder: true, // Set recurringOrder to true
+          recurringSchedules: formattedSchedules,
+        };
+
+        setRecurveProductToCart(updatedCartData);
+        onClose()
+        Toast.show({
+          text1: 'product added to cart',
+          textStyle: { textAlign: 'center', fontSize: 22 },
+          type: 'success',
+          visibilityTime: 5000,
+        });
+      } else {
+        Toast.show({
+          text1: 'Wrong time entered',
+          text2: `Please enter correct time 'HH:MM AM/PM'`,
+          textStyle: { textAlign: 'center', fontSize: 22 },
+          type: 'error',
+          visibilityTime: 5000,
+        });
+      }
+    } else if (!time || recurringSchedules.length > 0) {
+      Toast.show({
+        text1: 'Input field empty',
+        text2: 'Please enter time and day',
+        textStyle: { textAlign: 'center' },
+        type: 'error',
+        visibilityTime: 5000,
+      });
+      console.log('Input field empty');
+    } else {
+      Toast.show({
+        text1: 'Please enter time and day',
+        textStyle: { textAlign: 'center' },
+        type: 'error',
+        visibilityTime: 5000,
+      });
+    }
   };
 
   const renderDayButtons = () => {
@@ -218,7 +229,7 @@ const ActionsheetScreen = ({
     <Center>
       <Actionsheet isOpen={isOpen} onClose={onClose} disableOverlay>
         <Actionsheet.Content>
-          <Box w="100%" h={250} style={{height: actionsheetHeight}}>
+          <Box w="100%" h={250} style={{ height: actionsheetHeight }}>
             <View style={styles.container}>
               <Text>Select a day:</Text>
               <View style={styles.daysContainer}>{renderDayButtons()}</View>
@@ -260,7 +271,7 @@ const ActionsheetScreen = ({
   );
 };
 
-export {Alert, BadgeIcon, ActionsheetScreen};
+export { Alert, BadgeIcon, ActionsheetScreen };
 
 const styles = {
   container: {

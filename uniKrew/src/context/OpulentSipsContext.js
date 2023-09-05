@@ -35,6 +35,24 @@ export const OpulentSipsProvider = ({children}) => {
   const [currentAccount, setCurrentAccount] = useState('algo');
 
   //functions
+  const loginUser = async credentials => {
+    const data = await postApi(`user/login`, credentials, dispatch);
+    // if (data?.status) {
+    console.log(
+      '🚀 ~ file: OpulentSipsContext.js:41 ~ loginUser ~ data:',
+      data,
+    );
+    //   return data?.response;
+    // } else {
+    //   return null;
+    // }
+  };
+
+  let credentials = {email: 'hariss.ali9211@gmail.com', password: 'ali'};
+  useEffect(() => {
+    loginUser(credentials);
+  }, []);
+
   const getProductsFromStore = async () => {
     const data = await getApi(`product/getAllProduct`, dispatch);
     if (data?.status) {
@@ -161,6 +179,7 @@ export const OpulentSipsProvider = ({children}) => {
         increasesQuantityProduct,
         setFavorite,
         unSetFavorite,
+        loginUser,
       }}>
       {children}
     </OpulentSips.Provider>

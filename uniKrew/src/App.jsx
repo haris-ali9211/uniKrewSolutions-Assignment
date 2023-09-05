@@ -71,16 +71,16 @@ function App() {
           <NativeBaseProvider>
             <OpulentSipsProvider>
               <Stack.Navigator>
-                {showOnBoarding && (
+                {/* {showOnBoarding && (
                   <Stack.Screen
                     name="OnBoarding"
                     component={OnBoarding}
                     options={{ headerShown: false }}
                   />
-                )}
+                )} */}
                 <Stack.Screen
                   name="Products"
-                  component={Products}
+                  component={Login}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen

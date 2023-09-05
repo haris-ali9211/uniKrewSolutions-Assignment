@@ -310,6 +310,7 @@ const ProductDetails = ({ navigation, route }) => {
                 onClose={onClose}
                 setRecurveProductToCart={setRecurveProductToCart}
                 cartData={cartData}
+                navigate={navigation}
               />
             </View>
             {/* </ScrollView> */}

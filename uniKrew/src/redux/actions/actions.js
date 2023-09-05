@@ -23,11 +23,11 @@ export function removeProductFromCart(_id) {
 }
 
 export function increasesQuantity(_id) {
-  return dispatch => dispatch({type: 'INCREASE_ITEM_QUANTITY', payload: _id});
+  return dispatch => dispatch({type: 'INCREMENT_QUANTITY', payload: _id});
 }
 
 export function decreasesQuantity(_id) {
-  return dispatch => dispatch({type: 'DECREASE_ITEM_QUANTITY', payload: _id});
+  return dispatch => dispatch({type: 'DECREMENT_QUANTITY', payload: _id});
 }
 
 export function addFavorite(product) {

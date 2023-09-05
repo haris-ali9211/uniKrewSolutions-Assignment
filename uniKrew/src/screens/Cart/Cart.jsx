@@ -90,7 +90,7 @@ export default function Cart({ navigation }) {
           <PrimaryButton
             title="CHECKOUT"
             style={style}
-            onPress={() => setIsOpen(!isOpen)}
+            onPress={() => navigation.navigate('Checkout')}
           />
         </View>
 

@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import {
     SafeAreaView,
-    StyleSheet,
     View,
     Text,
     TouchableOpacity,
@@ -39,12 +38,19 @@ const foods = [
     },
 ];
 
+// redux actions
+import { useSelector } from 'react-redux';
+
 export default Checkout = ({ navigation }) => {
 
-    const [cartItems, setCartItems] = useState(foods);
-    const [totalPrice, setTotalPrice] = useState(
-        cartItems.reduce((total, item) => total + item.price, 0),
-    );
+    // redux
+    const { totalPrice, cartItems } = useSelector(state => state.cart);
+
+
+    // const [cartItems, setCartItems] = useState(foods);
+    // const [totalPrice, setTotalPrice] = useState(
+    //     cartItems.reduce((total, item) => total + item.price, 0),
+    // );
 
     const updateCartItemQuantity = (itemId, quantity) => {
         const updatedCartItems = cartItems.map(item =>
@@ -96,9 +102,9 @@ export default Checkout = ({ navigation }) => {
                         <Text style={style.orderSummaryHeaderText}>Order Summary</Text>
                     </View>
 
-                    {cartItems.map(item => (
-                        <View style={style.orderItem} key={item.id}>
-                            <Text style={style.orderItemName}>2x {item.name}</Text>
+                    {cartItems.map((item, index) => (
+                        <View style={style.orderItem} key={index}>
+                            <Text style={style.orderItemName}>{`${item.quantity}x ${item.beverageName}, ${item.cupCapacity} with ${item.sugarLevel === 'none' ? 'no' : item.sugarLevel} sugar`}</Text>
                             <Text style={style.orderItemPrice}>${item.price.toFixed(2)}</Text>
                         </View>
                     ))}
