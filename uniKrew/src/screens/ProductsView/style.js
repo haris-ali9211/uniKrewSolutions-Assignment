@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: 'space-between',
   },
-  categoryText: {fontSize: 16, color: 'grey', fontWeight: 'bold'},
+  categoryText: {fontSize: 14, color: 'grey', fontWeight: 'bold'},
   categoryTextSelected: {
     color: COLORS.green,
     paddingBottom: 5,

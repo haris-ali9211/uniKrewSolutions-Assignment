@@ -20,11 +20,11 @@ import {
   Actionsheet,
 } from 'native-base';
 
-// toast
-import Toast from 'react-native-toast-message';
-
 // colors
 import COLORS from '../consts/colors';
+
+// redux actions
+import {useSelector} from 'react-redux';
 
 const Alert = ({cancelRef, onClose, isOpen, navigation}) => {
   const handelFlow = () => {
@@ -66,21 +66,28 @@ const Alert = ({cancelRef, onClose, isOpen, navigation}) => {
   );
 };
 
-const BadgeIcon = ({number}) => {
+const BadgeIcon = () => {
+  // redux
+  const {totalQuantity} = useSelector(state => state.cart);
+
   return (
-    <Badge // bg="red.400"
-      colorScheme="danger"
-      rounded="full"
-      mb={-4}
-      mr={-4}
-      zIndex={1}
-      variant="solid"
-      alignSelf="flex-end"
-      _text={{
-        fontSize: 11,
-      }}>
-      {number}
-    </Badge>
+    <>
+      {totalQuantity > 0 ? (
+        <Badge // bg="red.400"
+          colorScheme="danger"
+          rounded="full"
+          mb={-4}
+          mr={-2}
+          zIndex={1}
+          variant="solid"
+          alignSelf="flex-end"
+          _text={{
+            fontSize: 10,
+          }}>
+          {totalQuantity}
+        </Badge>
+      ) : null}
+    </>
   );
 };
 
@@ -90,6 +97,7 @@ const ActionsheetScreen = ({
   setRecurveProductToCart,
   cartData,
 }) => {
+  // useState
   const [selectedDay, setSelectedDay] = useState('');
   const [time, setTime] = useState('');
 

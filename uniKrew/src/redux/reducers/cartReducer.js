@@ -5,6 +5,14 @@ const initialState = {
 };
 
 const cartReducer = (state = initialState, action) => {
+  const getItemPrice = (cartItems, itemId) => {
+    const item = cartItems.find(item => item._id === itemId);
+    if (item) {
+      return item.quantity * item.price;
+    }
+    return 0;
+  };
+
   switch (action.type) {
     case 'ADD_TO_CART':
       const newItem = action.payload;
@@ -74,21 +82,17 @@ const cartReducer = (state = initialState, action) => {
       );
 
       if (existingRecurringItemIndex !== -1) {
-        // There is an existing recurring order for the user
         const updatedCartItems = [...state.cartItems];
         const existingRecurringItem =
           updatedCartItems[existingRecurringItemIndex];
 
-        // Merge the new recurring order schedules with the existing one
         const mergedSchedules = [
           ...existingRecurringItem.recurringSchedules,
           ...recurringItem.recurringSchedules,
         ];
 
-        // Update the existing recurring order with the merged schedules
         existingRecurringItem.recurringSchedules = mergedSchedules;
 
-        // Recalculate the total quantity and price
         const updatedTotalQuantity =
           state.totalQuantity + recurringItem.quantity;
         const updatedTotalPrice =
@@ -115,6 +119,52 @@ const cartReducer = (state = initialState, action) => {
           totalPrice: updatedTotalPrice,
         };
       }
+    case 'INCREASE_ITEM_QUANTITY':
+      const increasedItemId = action.payload;
+      const updatedCartItemsInc = state.cartItems.map(item => {
+        if (item._id === increasedItemId) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return item;
+      });
+
+      const updatedTotalQuantityInc = state.totalQuantity + 1;
+      const updatedTotalPriceInc =
+        state.totalPrice + getItemPrice(updatedCartItemsInc, increasedItemId);
+
+      return {
+        ...state,
+        cartItems: updatedCartItemsInc,
+        totalQuantity: updatedTotalQuantityInc,
+        totalPrice: updatedTotalPriceInc,
+      };
+
+    case 'DECREASE_ITEM_QUANTITY':
+      const decreasedItemId = action.payload;
+      const updatedCartItemsDec = state.cartItems.map(item => {
+        if (item._id === decreasedItemId && item.quantity > 1) {
+          return {
+            ...item,
+            quantity: item.quantity - 1,
+          };
+        }
+        return item;
+      });
+
+      const updatedTotalQuantityDec =
+        state.totalQuantity > 1 ? state.totalQuantity - 1 : 0;
+      const updatedTotalPriceDec =
+        state.totalPrice - getItemPrice(updatedCartItemsDec, decreasedItemId);
+
+      return {
+        ...state,
+        cartItems: updatedCartItemsDec,
+        totalQuantity: updatedTotalQuantityDec,
+        totalPrice: updatedTotalPriceDec,
+      };
 
     case 'RESET_CART':
       return {

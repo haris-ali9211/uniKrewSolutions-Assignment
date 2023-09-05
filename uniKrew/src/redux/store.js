@@ -18,6 +18,7 @@ import {
 import loginReducer from './reducers/loginReducer';
 import loaderReducer from './reducers/loader';
 import cartReducer from './reducers/cartReducer';
+import favoriteReducer from './reducers/favoriteReducer';
 
 const persistConfig = {
   key: 'root',
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   user: loginReducer,
   loader: loaderReducer,
   cart: cartReducer,
+  favorites: favoriteReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

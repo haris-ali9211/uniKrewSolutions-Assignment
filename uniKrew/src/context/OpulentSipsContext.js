@@ -17,6 +17,10 @@ import {
   resetProductFromCart,
   removeProductFromCart,
   saveRecurveProductToCart,
+  increasesQuantity,
+  decreasesQuantity,
+  removeFavorite,
+  addFavorite,
 } from '../redux/actions/actions';
 
 // toast
@@ -25,10 +29,7 @@ import Toast from 'react-native-toast-message';
 export const OpulentSipsProvider = ({children}) => {
   // redux function
   const dispatch = useDispatch();
-  const {totalPrice, totalQuantity, cartItems} = useSelector(
-    state => state.cart,
-  );
-  console.log('🚀:', totalPrice, totalQuantity, cartItems);
+  const {favorites} = useSelector(state => state.favorites);
 
   // useState hooks
   const [currentAccount, setCurrentAccount] = useState('algo');
@@ -54,39 +55,69 @@ export const OpulentSipsProvider = ({children}) => {
 
   const setProductToCart = cartData => {
     try {
-      console.log('cartData before dispatch:', cartData); // Debugging statement
       dispatch(saveProductToCart(cartData));
     } catch (error) {
       console.log('error', error);
-      // Toast.show({
-      //   text1: 'Something went wrong',
-      //   text2: error,
-      //   textStyle: {textAlign: 'center'},
-      //   type: 'error',
-      //   visibilityTime: 5000,
-      // });
     }
   };
 
   const setRecurveProductToCart = cartData => {
     try {
-      console.log('cartData before dispatch:', cartData); // Debugging statement
       dispatch(saveRecurveProductToCart(cartData));
     } catch (error) {
       console.log('error', error);
-      // Toast.show({
-      //   text1: 'Something went wrong',
-      //   text2: error,
-      //   textStyle: {textAlign: 'center'},
-      //   type: 'error',
-      //   visibilityTime: 5000,
-      // });
+    }
+  };
+
+  const setFavorite = product => {
+    try {
+      dispatch(addFavorite(product));
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const unSetFavorite = _id => {
+    try {
+      dispatch(removeFavorite(_id));
+    } catch (error) {
+      console.log('error', error);
     }
   };
 
   const resetProductCart = () => {
     try {
       dispatch(resetProductFromCart());
+    } catch (error) {
+      console.log('error', error);
+      Toast.show({
+        text1: 'Something went wrong',
+        text2: 'Please try again',
+        textStyle: {textAlign: 'center'},
+        type: 'error',
+        visibilityTime: 5000,
+      });
+    }
+  };
+
+  const increasesQuantityProduct = _id => {
+    try {
+      dispatch(increasesQuantity(_id));
+    } catch (error) {
+      console.log('error', error);
+      Toast.show({
+        text1: 'Something went wrong',
+        text2: 'Please try again',
+        textStyle: {textAlign: 'center'},
+        type: 'error',
+        visibilityTime: 5000,
+      });
+    }
+  };
+
+  const decreasesQuantityProduct = _id => {
+    try {
+      dispatch(decreasesQuantity(_id));
     } catch (error) {
       console.log('error', error);
       Toast.show({
@@ -126,6 +157,10 @@ export const OpulentSipsProvider = ({children}) => {
         resetProductCart,
         removeProduct,
         setRecurveProductToCart,
+        decreasesQuantityProduct,
+        increasesQuantityProduct,
+        setFavorite,
+        unSetFavorite,
       }}>
       {children}
     </OpulentSips.Provider>

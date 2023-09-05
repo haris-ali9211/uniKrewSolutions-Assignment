@@ -1,4 +1,3 @@
-import { FavouriteIcon } from 'native-base';
 import React, { useState } from 'react';
 import {
   View,
@@ -10,11 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 
-const CategoryList = ({ style }) => {
-  // useState
-  const [categoryIndex, setCategoryIndex] = useState(0);
-
-  const categories = ['coffee', 'juice', 'green tea', 'regular tea', 'favorite'];
+const CategoryList = ({ style, categories, categoryIndex, setCategoryIndex, handleCategory }) => {
 
   return (
     <View style={style.categoryContainer}>
@@ -22,7 +17,7 @@ const CategoryList = ({ style }) => {
         <TouchableOpacity
           key={index}
           activeOpacity={0.8}
-          onPress={() => setCategoryIndex(index)}>
+          onPress={() => handleCategory(index)}>
           <Text
             style={[
               style.categoryText,

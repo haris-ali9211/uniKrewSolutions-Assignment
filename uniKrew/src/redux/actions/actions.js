@@ -21,3 +21,19 @@ export function resetProductFromCart() {
 export function removeProductFromCart(_id) {
   return dispatch => dispatch({type: 'REMOVE_FROM_CART', payload: _id});
 }
+
+export function increasesQuantity(_id) {
+  return dispatch => dispatch({type: 'INCREASE_ITEM_QUANTITY', payload: _id});
+}
+
+export function decreasesQuantity(_id) {
+  return dispatch => dispatch({type: 'DECREASE_ITEM_QUANTITY', payload: _id});
+}
+
+export function addFavorite(product) {
+  return dispatch => dispatch({type: 'ADD_TO_FAVORITES', payload: product});
+}
+
+export function removeFavorite(_id) {
+  return dispatch => dispatch({type: 'REMOVE_FROM_FAVORITES', payload: _id});
+}

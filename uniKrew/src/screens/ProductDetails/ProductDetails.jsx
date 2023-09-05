@@ -1,5 +1,5 @@
 // react import
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   SafeAreaView,
@@ -11,33 +11,37 @@ import {
 } from 'react-native';
 
 //icons
-import {MaterialIcons} from '../../assets/icons/icon';
+import { MaterialIcons } from '../../assets/icons/icon';
 
 // colors import
 import COLORS from '../../consts/colors';
 
 // context
-import {OpulentSips} from '../../context/OpulentSipsContext';
+import { OpulentSips } from '../../context/OpulentSipsContext';
 
 //style
 import style from './style';
 
 // component
-import {ActionsheetScreen} from '../../components/NativeBaseComponents';
+import {
+  ActionsheetScreen,
+  BadgeIcon,
+} from '../../components/NativeBaseComponents';
+import AnimationLogo from '../../components/AnimationLogo';
 
 // redux actions
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // import native-base
-import {useDisclose} from 'native-base';
+import { useDisclose } from 'native-base';
 
-const ProductDetails = ({navigation, route}) => {
+const ProductDetails = ({ navigation, route }) => {
   //navigation
   const navigationData = route.params;
-  const {_id, img} = navigationData;
+  const { _id, img } = navigationData;
 
   // redux
-  const {isLoading} = useSelector(state => state.loader);
+  const { isLoading } = useSelector(state => state.loader);
 
   // context
   const {
@@ -49,7 +53,7 @@ const ProductDetails = ({navigation, route}) => {
   } = useContext(OpulentSips);
 
   // native function
-  const {isOpen, onOpen, onClose} = useDisclose();
+  const { isOpen, onOpen, onClose } = useDisclose();
 
   // useState
   const [product, setProduct] = useState([]);
@@ -97,6 +101,7 @@ const ProductDetails = ({navigation, route}) => {
 
   let cartData = {
     _id: product._id,
+    img: img,
     beverageName: product.beverageName,
     sugarLevel: selectedSugar,
     cupCapacity: selectedSize,
@@ -116,9 +121,7 @@ const ProductDetails = ({navigation, route}) => {
   return (
     <>
       {isLoading || error ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" color={COLORS.green} />
-        </View>
+        <AnimationLogo cartItems={product} message='Loading for server.' />
       ) : (
         <>
           <SafeAreaView
@@ -131,12 +134,19 @@ const ProductDetails = ({navigation, route}) => {
               <TouchableOpacity onPress={() => navigation.goBack()}>
                 <MaterialIcons name="arrow-back" size={28} />
               </TouchableOpacity>
-              <TouchableOpacity>
-                <MaterialIcons name="shopping-cart" size={28} />
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CartDetails')}>
+                <BadgeIcon />
+
+                <MaterialIcons
+                  name="shopping-cart"
+                  size={28}
+                  color={COLORS.green}
+                />
               </TouchableOpacity>
             </View>
             <View style={style.imageContainer}>
-              <Image source={img} style={{resizeMode: 'contain', flex: 1}} />
+              <Image source={img} style={{ resizeMode: 'contain', flex: 1 }} />
             </View>
 
             <View style={style.detailsContainer}>
@@ -148,7 +158,7 @@ const ProductDetails = ({navigation, route}) => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}>
-                <Text style={{fontSize: 28, fontWeight: 'bold'}}>
+                <Text style={{ fontSize: 28, fontWeight: 'bold' }}>
                   {product.beverageName}
                 </Text>
                 <View style={style.priceTag}>
@@ -163,8 +173,8 @@ const ProductDetails = ({navigation, route}) => {
                   </Text>
                 </View>
               </View>
-              <View style={{paddingHorizontal: 20, marginTop: 10}}>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                   Description
                 </Text>
                 <Text
@@ -177,8 +187,8 @@ const ProductDetails = ({navigation, route}) => {
                   {product.description}
                 </Text>
 
-                <View style={{marginTop: 20}}>
-                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                <View style={{ marginTop: 20 }}>
+                  <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                     Select Size
                   </Text>
                   <View style={style.sizeButtons}>
@@ -189,7 +199,7 @@ const ProductDetails = ({navigation, route}) => {
                           style={[
                             style.sizeButton,
                             selectedSize === data?.cupCapacity &&
-                              style.selectedSize,
+                            style.selectedSize,
                           ]}
                           onPress={() =>
                             handleSizeChange(data?.cupCapacity, data?.price)
@@ -204,8 +214,8 @@ const ProductDetails = ({navigation, route}) => {
                   </View>
                 </View>
 
-                <View style={{marginTop: 5}}>
-                  <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+                <View style={{ marginTop: 5 }}>
+                  <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
                     Select Sugar
                   </Text>
                   <View style={style.sizeButtons}>
@@ -295,20 +305,6 @@ const ProductDetails = ({navigation, route}) => {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => resetProductCart()}
-                style={{
-                  backgroundColor: COLORS.green,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    color: COLORS.white,
-                  }}>
-                  Schedule a delete
-                </Text>
-              </TouchableOpacity>
               <ActionsheetScreen
                 isOpen={isOpen}
                 onClose={onClose}
