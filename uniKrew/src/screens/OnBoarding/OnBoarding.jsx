@@ -45,7 +45,7 @@ const OnBoarding = ({ navigation }) => {
 
     if (clickCounter >= 2) {
       storeData()
-      navigation.replace('Products');
+      navigation.replace('Login');
       setClickCounter(0);
     } else {
       setCurrentLogoIndex(newIndex);

@@ -21,37 +21,89 @@ import {
   decreasesQuantity,
   removeFavorite,
   addFavorite,
+  loginRequest,
+  saveUser,
+  loginRequestFailure,
+  userLogout,
 } from '../redux/actions/actions';
-
-// toast
-import Toast from 'react-native-toast-message';
 
 export const OpulentSipsProvider = ({children}) => {
   // redux function
   const dispatch = useDispatch();
-  const {favorites} = useSelector(state => state.favorites);
+  const {currentUser} = useSelector(state => state.user);
+  const {totalPrice, cartItems} = useSelector(state => state.cart);
 
   // useState hooks
   const [currentAccount, setCurrentAccount] = useState('algo');
 
   //functions
-  const loginUser = async credentials => {
-    const data = await postApi(`user/login`, credentials, dispatch);
-    // if (data?.status) {
-    console.log(
-      '🚀 ~ file: OpulentSipsContext.js:41 ~ loginUser ~ data:',
-      data,
-    );
-    //   return data?.response;
-    // } else {
-    //   return null;
-    // }
+
+  const addOrder = async order => {
+    const data = await postApi(`order/addOrder`, order, dispatch);
+    if (data.savedOrder) {
+      return data;
+    } else {
+      return data;
+    }
   };
 
-  let credentials = {email: 'hariss.ali9211@gmail.com', password: 'ali'};
-  useEffect(() => {
-    loginUser(credentials);
-  }, []);
+  // let orderData = {
+  //   userId: '64ee02da8493957ac1a7e3a3',
+  //   beverageName: 'Jasmine Green Tea',
+  //   sugarLevel: 'none',
+  //   cupCapacity: 'small',
+  //   price: 200,
+  //   quantity: 1,
+  //   deliveryTime: '2023-09-01T15:30:00Z',
+  //   recurringOrder: true,
+  //   recurringSchedules: [
+  //     {
+  //       dayOfWeek: 'Monday',
+  //       deliveryTime: '15:30',
+  //     },
+  //     {
+  //       dayOfWeek: 'Wednesday',
+  //       deliveryTime: '15:30',
+  //     },
+  //     {
+  //       dayOfWeek: 'Friday',
+  //       deliveryTime: '15:30',
+  //     },
+  //   ],
+  // };
+
+  // useEffect(() => {
+  //   addOrder(orderData);
+  // }, []);
+
+  const loginUser = async credentials => {
+    dispatch(loginRequest());
+    const data = await postApi(`user/login`, credentials, dispatch);
+    if (data.user) {
+      dispatch(saveUser(data.user));
+      return data?.user;
+    } else {
+      dispatch(loginRequestFailure());
+      return data;
+    }
+  };
+
+  const registerUser = async credentials => {
+    const data = await postApi(`user/register`, credentials, dispatch);
+    if (data) {
+      return data;
+    } else {
+      return data;
+    }
+  };
+
+  const logOutUser = async () => {
+    try {
+      dispatch(userLogout());
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   const getProductsFromStore = async () => {
     const data = await getApi(`product/getAllProduct`, dispatch);
@@ -180,6 +232,9 @@ export const OpulentSipsProvider = ({children}) => {
         setFavorite,
         unSetFavorite,
         loginUser,
+        logOutUser,
+        registerUser,
+        addOrder,
       }}>
       {children}
     </OpulentSips.Provider>

@@ -6,6 +6,9 @@ import {
     ActivityIndicator,
     StyleSheet,
 } from 'react-native';
+
+import AnimationLogo from './AnimationLogo';
+
 import COLORS from '../consts/colors';
 const Loader = ({ visible = false }) => {
     const { width, height } = useWindowDimensions();

@@ -1,6 +1,6 @@
 
 //react import
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, SafeAreaView, Keyboard, Alert } from 'react-native';
 
 // colors import
@@ -14,11 +14,17 @@ import Loader from '../../components/Loader';
 // style
 import style from './style';
 
-// local storage import
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// context
+import { OpulentSips } from '../../context/OpulentSipsContext'
+
+// toast
+import Toast from 'react-native-toast-message';
 
 
 const Login = ({ navigation }) => {
+
+    // context
+    const { loginUser } = useContext(OpulentSips);
 
     const [inputs, setInputs] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState({});
@@ -41,29 +47,31 @@ const Login = ({ navigation }) => {
         }
     };
 
-    const login = () => {
+    const login = async () => {
         setLoading(true);
-        setTimeout(async () => {
-            setLoading(false);
-            let userData = await AsyncStorage.getItem('userData');
-            if (userData) {
-                userData = JSON.parse(userData);
-                if (
-                    inputs.email == userData.email &&
-                    inputs.password == userData.password
-                ) {
-                    navigation.navigate('HomeScreen');
-                    AsyncStorage.setItem(
-                        'userData',
-                        JSON.stringify({ ...userData, loggedIn: true }),
-                    );
-                } else {
-                    Alert.alert('Error', 'Invalid Details');
-                }
+        let credentials = { email: inputs.email, password: inputs.password };
+        let userData = await loginUser(credentials);
+        if (userData) {
+            if (
+                inputs.email == userData.email
+            ) {
+                Toast.show({
+                    text1: 'Success',
+                    text2: 'Login Successfully',
+                    textStyle: { textAlign: 'center' },
+                    type: 'success',
+                    visibilityTime: 5000,
+                });
+                setLoading(false);
+                navigation.replace('Products');
             } else {
-                Alert.alert('Error', 'User does not exist');
+                setLoading(false);
+                Alert.alert('Error', 'Invalid Details');
             }
-        }, 3000);
+        } else {
+            setLoading(false);
+            Alert.alert('Error', 'User does not exist');
+        }
     };
 
     const handleOnchange = (text, input) => {
@@ -104,7 +112,7 @@ const Login = ({ navigation }) => {
                     />
                     <Button title="Log In" onPress={validate} />
                     <Text
-                        onPress={() => navigation.navigate('RegistrationScreen')}
+                        onPress={() => navigation.navigate('Register')}
                         style={{
                             color: COLORS.black,
                             fontWeight: 'bold',
@@ -112,6 +120,22 @@ const Login = ({ navigation }) => {
                             fontSize: 16,
                         }}>
                         Don't have account ?
+                    </Text>
+                    <Text
+                        style={{
+                            color: COLORS.grey,
+                            textAlign: 'center',
+                            fontSize: 12,
+                        }}>
+                        tempEmail: test@gmail.com
+                    </Text>
+                    <Text
+                        style={{
+                            color: COLORS.grey,
+                            textAlign: 'center',
+                            fontSize: 12,
+                        }}>
+                        tempPassword: test
                     </Text>
                 </View>
             </View>

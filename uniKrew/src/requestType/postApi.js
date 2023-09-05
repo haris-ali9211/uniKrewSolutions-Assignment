@@ -23,7 +23,7 @@ export default async function postApi(endpoint, payload, dispatch) {
 
     return response.data;
   } catch (e) {
-    console.log('error', e);
+    console.log('error', e.data);
     dispatch(loaderStop());
     if (
       e.message.includes('timeout of ') &&
@@ -38,13 +38,13 @@ export default async function postApi(endpoint, payload, dispatch) {
       });
     } else {
       Toast.show({
-        text1: e.message,
+        text1: e.response.data.error,
         text2: 'Please try again later',
         textStyle: {textAlign: 'center'},
         type: 'error',
         visibilityTime: 5000,
       });
     }
-    return null;
+    return e.response.data.error;
   }
 }

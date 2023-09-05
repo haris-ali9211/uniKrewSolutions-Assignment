@@ -1,5 +1,5 @@
 //react import
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, SafeAreaView, Keyboard, Alert, ScrollView } from 'react-native';
 
 // colors import
@@ -13,21 +13,26 @@ import Loader from '../../components/Loader';
 // style
 import style from './style';
 
-// local storage import
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// context
+import { OpulentSips } from '../../context/OpulentSipsContext'
 
-
+// toast
+import Toast from 'react-native-toast-message';
 
 const Register = ({ navigation }) => {
 
-    const [inputs, setInputs] = React.useState({
+    // context
+    const { registerUser } = useContext(OpulentSips);
+
+
+    const [inputs, setInputs] = useState({
         email: '',
-        fullName: '',
+        userName: '',
         phone: '',
         password: '',
     });
-    const [errors, setErrors] = React.useState({});
-    const [loading, setLoading] = React.useState(false);
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const validate = () => {
         Keyboard.dismiss();
@@ -41,8 +46,8 @@ const Register = ({ navigation }) => {
             isValid = false;
         }
 
-        if (!inputs.fullName) {
-            handleError('Please input fullName', 'fullName');
+        if (!inputs.userName) {
+            handleError('Please input userName', 'userName');
             isValid = false;
         }
 
@@ -60,21 +65,33 @@ const Register = ({ navigation }) => {
         }
 
         if (isValid) {
-            // register();
+            register();
         }
     };
 
-    const register = () => {
+    const register = async () => {
+        let credentials = {
+            username: inputs.userName,
+            email: inputs.email,
+            password: inputs.password
+        }
         setLoading(true);
-        setTimeout(() => {
-            try {
-                setLoading(false);
-                AsyncStorage.setItem('userData', JSON.stringify(inputs));
-                navigation.navigate('Login');
-            } catch (error) {
-                Alert.alert('Error', 'Something went wrong');
-            }
-        }, 3000);
+        let registerUserFun = await registerUser(credentials);
+        console.log("🚀 ~ file: Register.jsx:82 ~ register ~ registerUser:", registerUser)
+        if (registerUserFun.message) {
+            Toast.show({
+                text1: 'Success',
+                text2: 'User registered Successfully',
+                textStyle: { textAlign: 'center' },
+                type: 'success',
+                visibilityTime: 5000,
+            });
+            setLoading(false);
+            navigation.navigate('Login');
+        } else {
+            setLoading(false);
+            // Alert.alert('Error', 'Something went wrong');
+        }
     };
 
     const handleOnchange = (text, input) => {
@@ -106,12 +123,12 @@ const Register = ({ navigation }) => {
                     />
 
                     <Input
-                        onChangeText={text => handleOnchange(text, 'fullName')}
-                        onFocus={() => handleError(null, 'fullName')}
+                        onChangeText={text => handleOnchange(text, 'userName')}
+                        onFocus={() => handleError(null, 'userName')}
                         iconName="account-outline"
-                        label="Full Name"
-                        placeholder="Enter your full name"
-                        error={errors.fullName}
+                        label="User Name"
+                        placeholder="Enter your user name"
+                        error={errors.userName}
                     />
 
                     <Input

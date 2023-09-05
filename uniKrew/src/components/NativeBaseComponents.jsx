@@ -162,8 +162,8 @@ const ActionsheetScreen = ({
         }));
 
         const updatedCartData = {
-          ...cartData, // Copy the existing cartData properties
-          recurringOrder: true, // Set recurringOrder to true
+          ...cartData,
+          recurringOrder: true,
           recurringSchedules: formattedSchedules,
         };
 

@@ -70,7 +70,7 @@ const cartReducer = (state = initialState, action) => {
     case 'ADD_RECURRING_TO_CART':
       const recurringItem = action.payload;
       const existingRecurringItemIndex = state.cartItems.findIndex(
-        item => item.userId === recurringItem.userId && item.recurringOrder,
+        item => item._id === recurringItem._id && item.recurringOrder,
       );
 
       if (existingRecurringItemIndex !== -1) {
@@ -85,8 +85,15 @@ const cartReducer = (state = initialState, action) => {
           ...recurringItem.recurringSchedules,
         ];
 
-        // Update the existing recurring order with the merged schedules
-        existingRecurringItem.recurringSchedules = mergedSchedules;
+        // Create a new copy of the existing recurring item with merged schedules
+        const updatedExistingRecurringItem = {
+          ...existingRecurringItem,
+          recurringSchedules: mergedSchedules,
+        };
+
+        // Update the existing recurring order in the cart items
+        updatedCartItems[existingRecurringItemIndex] =
+          updatedExistingRecurringItem;
 
         // Recalculate the total quantity and price
         const updatedTotalQuantity =

@@ -37,3 +37,19 @@ export function addFavorite(product) {
 export function removeFavorite(_id) {
   return dispatch => dispatch({type: 'REMOVE_FROM_FAVORITES', payload: _id});
 }
+
+export function loginRequest() {
+  return dispatch => dispatch({type: 'LOGIN_REQUEST'});
+}
+
+export function saveUser(user) {
+  return dispatch => dispatch({type: 'LOGIN_SUCCESS', payload: user});
+}
+
+export function loginRequestFailure() {
+  return dispatch => dispatch({type: 'LOGIN_FAILURE'});
+}
+
+export function userLogout() {
+  return dispatch => dispatch({type: 'LOGOUT'});
+}

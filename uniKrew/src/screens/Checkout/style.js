@@ -73,7 +73,7 @@ const style = StyleSheet.create({
   orderItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    // marginBottom: 8,
   },
   orderItemName: {
     fontSize: 16,

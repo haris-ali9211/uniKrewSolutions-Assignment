@@ -7,6 +7,7 @@ import Login from './screens/Login/Login';
 import Register from './screens/Register/Register';
 import Checkout from './screens/Checkout/Checkout';
 import MainLogo from './screens/MainLogo/MainLogo';
+import OrderConfirm from './screens/OrderConfirm/OrderConfirm';
 
 // import react
 import React, { useState, useEffect } from 'react';
@@ -71,16 +72,16 @@ function App() {
           <NativeBaseProvider>
             <OpulentSipsProvider>
               <Stack.Navigator>
-                {/* {showOnBoarding && (
+                {showOnBoarding && (
                   <Stack.Screen
                     name="OnBoarding"
                     component={OnBoarding}
                     options={{ headerShown: false }}
                   />
-                )} */}
+                )}
                 <Stack.Screen
                   name="Products"
-                  component={Login}
+                  component={Products}
                   options={{ headerShown: false }}
                 />
                 <Stack.Screen
@@ -106,6 +107,11 @@ function App() {
                 <Stack.Screen
                   name="Checkout"
                   component={Checkout}
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="OrderConfirm"
+                  component={OrderConfirm}
                   options={{ headerShown: false }}
                 />
               </Stack.Navigator>
