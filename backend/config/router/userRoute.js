@@ -39,7 +39,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-
 //Login a user
 router.post("/login", async (req, res) => {
   try {
@@ -66,5 +65,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/getUsers", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 module.exports = router;
