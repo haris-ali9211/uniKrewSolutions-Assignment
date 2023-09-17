@@ -6,7 +6,7 @@
 - [Getting Started](#getting-started)
   - [Admin Panel](#admin-panel)
   - [Mobile App](#mobile-app)
-  - [How to Get IP Address from Command Prompt (CMD](#setupforIP)
+  - [How to Get IP Address from Command Prompt (CMD)](#setupforIP)
 
 ## Getting Started
 
